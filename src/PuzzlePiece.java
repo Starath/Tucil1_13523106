@@ -7,19 +7,12 @@ public class PuzzlePiece {
     // ATTRIBUTES
     private char id;
     private char[][] shape;
-    private int rows;
-    private int cols;
     private List<char[][]> orientations;
     
     // CONSTRUCTORS
-    public PuzzlePiece(char id, List<String> shapeLines) {
+    public PuzzlePiece(char id, char[][] shape) {
         this.id = id;
-        this.rows = shapeLines.size();
-        this.cols = shapeLines.get(0).length();
-        this.shape = new char[rows][cols];
-        for (int i = 0; i < rows; i++) {
-            this.shape[i] = shapeLines.get(i).toCharArray();
-        }
+        this.shape = shape;
         this.orientations = generateAllOrientations();
     }
 
@@ -29,12 +22,9 @@ public class PuzzlePiece {
         
         char[][] current = shape;
         for (int i = 0; i < 4; i++) {
-            // Add the current rotation.
             addIfUnique(current, result, seen);
-            // Add its horizontally flipped version.
             char[][] flipped = flipHorizontally(current);
             addIfUnique(flipped, result, seen);
-            // Rotate for the next iteration.
             current = rotate90(current);
         }
         
@@ -51,7 +41,7 @@ public class PuzzlePiece {
         }
     }
     
-    // Converts Puzzle Piece into a String representation. (for HashSet's Keys)
+    // Converts Puzzle Piece into a String. (for HashSet's Keys)
     private String matrixToString(char[][] mat) {
         StringBuilder sb = new StringBuilder();
         for (char[] row : mat) {
@@ -99,14 +89,6 @@ public class PuzzlePiece {
     }
 
     //SELECTOR
-    public int getCols() {
-        return cols;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
     public char getId() {
         return id;
     }
@@ -115,5 +97,8 @@ public class PuzzlePiece {
         return shape;
     }
 
+    public List<char[][]> getOrientations() {
+        return orientations;
+    }
 
 }
