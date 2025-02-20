@@ -8,6 +8,7 @@ public class PuzzlePiece {
     private char id;
     private char[][] shape;
     private List<char[][]> orientations;
+    // private static int count = 0;
     
     // CONSTRUCTORS
     public PuzzlePiece(char id, char[][] shape) {
