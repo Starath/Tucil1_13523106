@@ -8,7 +8,7 @@ public class Solver {
 
     public boolean solvePuzzle(int puzzlePieceIndex) {
         if (puzzlePieceIndex == board.getPieces().size()) return true;
-        PuzzlePiece puzzlePiece = board.getPieces().get(puzzlePieceIndex); 
+        PuzzlePiece puzzlePiece = board.getPieces().get(puzzlePieceIndex);
         for (char[][] shape : puzzlePiece.getOrientations()) {
             for (int i = 0; i < board.getRows(); i++) {
                 for (int j = 0; j < board.getCols(); j++) {
@@ -32,16 +32,5 @@ public class Solver {
         return iterationCount;
     }
 
-    public static void main(String[] args) {
-        Board board;
-        board = IOPuzzlerFile.readInputFile();
-        Solver solver = new Solver(board);
-        boolean result = solver.solvePuzzle(0);
-        System.out.println("jumlah iterasi: " + solver.getIterationCount());
-        for (char[] string : board.getGrid()) {
-            System.out.println(new String(string));
-        }
-        if (result) IOPuzzlerFile.saveSolutionFile(solver,0);
-    }
 }
 

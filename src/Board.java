@@ -7,6 +7,8 @@ public class Board {
     // ATTRIBUTES
     private char[][] grid;
     private List<PuzzlePiece> pieces;
+    private String config;
+    private int validGrids;
 
     static final String[] ANSI_COLORS = {
         "\u001B[30m", // Hitam
@@ -41,15 +43,25 @@ public class Board {
     
 
     // CONSTRUCTOR
-    public Board(int rows, int cols, List<PuzzlePiece> pieces) {
+    public Board(int rows, int cols, String config, List<PuzzlePiece> pieces) {
         this.grid = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             Arrays.fill(grid[i], '.');
         }
         this.pieces = pieces;
+        this.config = config;
+        this.validGrids = rows * cols;
     }
 
     // SELECTOR
+    public String getConfig() {
+        return config;
+    }
+
+    public int getValidGrids() {
+        return validGrids;
+    }
+
     public List<PuzzlePiece> getPieces() { 
         return pieces; 
     }
@@ -64,6 +76,23 @@ public class Board {
 
     public char[][] getGrid() {
         return grid;
+    }
+
+    // Setter
+    public void setGrid(char[][] grid) {
+        this.grid = grid;
+    }
+
+    public void setConfig(String config) {
+        this.config = config;
+    }
+
+    public void setPieces(List<PuzzlePiece> pieces) {
+        this.pieces = pieces;
+    }
+
+    public void setValidGrids(int validGrids) {
+        this.validGrids = validGrids;
     }
 
     // FUNCTION
@@ -139,5 +168,4 @@ public class Board {
             System.out.println();
         }
     }
-
 }

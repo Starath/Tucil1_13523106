@@ -8,7 +8,7 @@ public class PuzzlePiece {
     private char id;
     private char[][] shape;
     private List<char[][]> orientations;
-    // private static int count = 0;
+    private static int count = 0;
     
     // CONSTRUCTORS
     public PuzzlePiece(char id, char[][] shape) {
@@ -100,6 +100,19 @@ public class PuzzlePiece {
 
     public List<char[][]> getOrientations() {
         return orientations;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    // METHODS
+    public static void addCount(int add) {
+        count += add;
+    }
+
+    public static void resetCount() {
+        count = 0;
     }
 
 }

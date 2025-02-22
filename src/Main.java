@@ -5,15 +5,18 @@ public class Main {
             Board board = IOPuzzlerFile.readInputFile();
             Solver solver = new Solver(board);
             long startTime = System.currentTimeMillis();
+            if (solver.getBoard().getValidGrids() != PuzzlePiece.getCount()) {
+                System.out.println("No solution");
+            }
             boolean result = solver.solvePuzzle(0);
             long endTime = System.currentTimeMillis() - startTime;
             if (result) {
                 solver.getBoard().printColored();
             } else {
-                System.out.println("Tidak ada solusi.");
+                System.out.println("No solution.");
             }
-            System.out.println("jumlah iterasi: " + solver.getIterationCount());
-            System.out.println("Waktu eksekusi: " + endTime + " ms");
+            System.out.println("Number of cases examined: " + solver.getIterationCount() + " cases");
+            System.out.println("Execution time (ms): " + endTime + " ms");
             IOPuzzlerFile.promptSaveSolution(solver, endTime);
             IOPuzzlerFile.endConfirmation();
         }
