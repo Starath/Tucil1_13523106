@@ -10,7 +10,7 @@ public class Board {
     private String config;
     private int validGrids;
 
-    static final String[] ANSI_COLORS = {
+    public static final String[] ANSI_COLORS = {
         "\u001B[30m", // Hitam
         "\u001B[31m", // Merah
         "\u001B[32m", // Hijau
@@ -39,7 +39,7 @@ public class Board {
         "\u001B[107m"  // Background Putih terang
     };
     
-    static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RESET = "\u001B[0m";
     
 
     // CONSTRUCTOR
@@ -96,17 +96,6 @@ public class Board {
     }
 
     // FUNCTION
-    public int[] findEmpty(){
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j] == '.') {
-                    return new int[]{i, j};
-                }
-            }
-        }
-        return null;
-    }
-
     public boolean canPlace(char[][] pieceMat, int r, int c) {
         int pr = pieceMat.length;
         int pc = pieceMat[0].length;
@@ -118,6 +107,23 @@ public class Board {
                 if (pieceMat[i][j] != '.' && grid[r+i][c+j] != '.') {
                     return false;
                 }
+            }
+        }
+        return true;
+    }
+    public boolean isEmpty() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] != '.') return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isFull() {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '.') return false;
             }
         }
         return true;
@@ -168,4 +174,6 @@ public class Board {
             System.out.println();
         }
     }
+
+
 }

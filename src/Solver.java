@@ -7,7 +7,11 @@ public class Solver {
     }
 
     public boolean solvePuzzle(int puzzlePieceIndex) {
-        if (puzzlePieceIndex == board.getPieces().size()) return true;
+        if (puzzlePieceIndex == board.getPieces().size()) {
+            if (board.isFull()) return true;
+            return false;
+        }
+        
         PuzzlePiece puzzlePiece = board.getPieces().get(puzzlePieceIndex);
         for (char[][] shape : puzzlePiece.getOrientations()) {
             for (int i = 0; i < board.getRows(); i++) {

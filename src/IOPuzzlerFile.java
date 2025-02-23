@@ -3,6 +3,13 @@ import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
 
 public class IOPuzzlerFile {
     public static final Scanner sc = new Scanner(System.in);
@@ -13,6 +20,7 @@ public class IOPuzzlerFile {
             PuzzlePiece.resetCount();
             Path filePath = readFileName("Enter the test case file name (e.g., test.txt): ");
             while (!Files.exists(filePath)) {
+                System.out.println("File does not exist.");
                 filePath = readFileName("Enter the test case file name (e.g., test.txt): ");
             }
         
@@ -122,6 +130,11 @@ public class IOPuzzlerFile {
                 continue;
             }
 
+            if (board.getValidGrids() != PuzzlePiece.getCount()) {
+                System.err.println("Unsolvable: the total number of puzzle pieces' required cells does not match the number of valid grids.");
+                continue;
+            }
+
             return board;
         }
     }
@@ -168,8 +181,8 @@ public class IOPuzzlerFile {
                     if (ref == null) {
                         ref = shrunk[i][j];
                     } else if (shrunk[i][j] != ref) {
-                        System.err.println("Error: Karakter tidak konsisten pada puzzle piece. Ditemukan '" 
-                                + shrunk[i][j] + "', diharapkan '" + ref + "'.");
+                        System.err.println("Error: Inconsistent character on a puzzle piece, found '" 
+                                + shrunk[i][j] + "', expected '" + ref + "'.");
                         return null;
                     }
                 }
@@ -188,8 +201,12 @@ public class IOPuzzlerFile {
     public static void saveSolutionFile(Solver solver, long endTime) {
         Path filePath = readFileName("Enter the solution file name (e.g., solution.txt): ");
         try (PrintWriter out = new PrintWriter(new FileWriter(filePath.toFile()))) {
-            for (char[] string : solver.getBoard().getGrid()) {
-                out.println(new String(string));
+            if (solver.getBoard().isEmpty()) {
+                out.println("No solution");
+            } else {
+                for (char[] string : solver.getBoard().getGrid()) {
+                    out.println(new String(string));
+                }
             }
             out.println("Number of cases examined: " + solver.getIterationCount() + " cases");
             out.println("Execution time (ms): " + endTime + " ms");
@@ -214,4 +231,85 @@ public class IOPuzzlerFile {
             System.exit(0);
         }
     }
+    public static void promptSaveImageSolution(Board board) {
+        System.out.print("Do you want to save the solution as a PNG image with circular tiles? (yes/no): ");
+        String ans = sc.nextLine().trim().toLowerCase();
+        if(ans.equals("yes")) {
+            saveSolutionImage(board);
+        }
+    }
+    
+    public static void saveSolutionImage(Board board) {
+        Path filePath = readFileName("Enter the solution image file name (e.g., puzzle_solution.png): ");
+        
+        int cellSize = 50;
+        int rows = board.getRows();
+        int cols = board.getCols();
+        int imageWidth = cols * cellSize;
+        int imageHeight = rows * cellSize;
+        
+        BufferedImage image = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = image.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0, 0, imageWidth, imageHeight);
+        
+        List<Color> pieceColors = Arrays.asList(
+            new Color(255, 0, 0), new Color(0, 255, 0), new Color(0, 0, 255), new Color(255, 255, 0),
+            new Color(255, 165, 0), new Color(75, 0, 130), new Color(238, 130, 238), new Color(0, 255, 255),
+            new Color(255, 20, 147), new Color(139, 69, 19), new Color(255, 140, 0), new Color(46, 139, 87),
+            new Color(70, 130, 180), new Color(148, 0, 211), new Color(255, 182, 193), new Color(0, 128, 128),
+            new Color(220, 20, 60), new Color(0, 191, 255), new Color(154, 205, 50), new Color(255, 99, 71),
+            new Color(50, 205, 50), new Color(123, 104, 238), new Color(0, 255, 127), new Color(184, 134, 11),
+            new Color(72, 61, 139), new Color(255, 215, 0)
+        );
+    
+        Map<Character, Color> pieceColorMap = new HashMap<>();
+        char[][] grid = board.getGrid();
+        int colorIndex = 0;
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                char ch = grid[i][j];
+                if(ch != '.' && !pieceColorMap.containsKey(ch)){
+                    pieceColorMap.put(ch, pieceColors.get(colorIndex % pieceColors.size()));
+                    colorIndex++;
+                }
+            }
+        }
+        
+        for (int i = 0; i < rows; i++){
+            for (int j = 0; j < cols; j++){
+                int x = j * cellSize;
+                int y = i * cellSize;
+                char ch = grid[i][j];
+                if(ch == '.'){
+                    g2d.setColor(Color.WHITE);
+                    g2d.fillOval(x, y, cellSize, cellSize);
+                } else {
+                    g2d.setColor(pieceColorMap.get(ch));
+                    g2d.fillOval(x, y, cellSize, cellSize);
+                    g2d.setColor(Color.BLACK);
+                    FontMetrics fm = g2d.getFontMetrics();
+                    int textWidth = fm.stringWidth(String.valueOf(ch));
+                    int textHeight = fm.getAscent();
+                    int textX = x + (cellSize - textWidth) / 2;
+                    int textY = y + (cellSize + textHeight) / 2;
+                    g2d.drawString(String.valueOf(ch), textX, textY);
+                }
+                g2d.setColor(Color.BLACK);
+                g2d.drawOval(x, y, cellSize, cellSize);
+            }
+        }
+        
+        g2d.dispose();
+        
+        try {
+            ImageIO.write(image, "png", filePath.toFile());
+            System.out.println("Solution image saved to " + filePath.toString());
+        } catch (IOException e) {
+            System.err.println("Error saving PNG file: " + e.getMessage());
+        }
+    }
+
 }
