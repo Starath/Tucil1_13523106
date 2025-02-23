@@ -169,7 +169,7 @@ public class Board {
                 if(ch == '.')
                     System.out.print(ch);
                 else
-                    System.out.print(colorMap.get(ch) + ch + ANSI_RESET);
+                    System.out.print(colorMap.get(ch) + ch + ANSI_RESET + " ");
             }
             System.out.println();
         }
