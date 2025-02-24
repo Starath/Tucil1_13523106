@@ -1,0 +1,3 @@
+No solution
+Number of cases examined: 297 cases
+Execution time (ms): 0 ms

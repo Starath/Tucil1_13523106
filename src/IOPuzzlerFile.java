@@ -193,8 +193,8 @@ public class IOPuzzlerFile {
 
     private static Path readFileName(String s) {
         System.out.print(s);
-        String fileName = sc.nextLine();
-        Path path = Paths.get("..", "test", fileName);
+        String fileName = sc.nextLine().trim();
+        Path path = Paths.get("test", fileName);
         return path;
     }
 
@@ -232,7 +232,7 @@ public class IOPuzzlerFile {
         }
     }
     public static void promptSaveImageSolution(Board board) {
-        System.out.print("Do you want to save the solution as a PNG image with circular tiles? (yes/no): ");
+        System.out.print("Do you want to save the solution as a PNG image? (yes/no): ");
         String ans = sc.nextLine().trim().toLowerCase();
         if(ans.equals("yes")) {
             saveSolutionImage(board);

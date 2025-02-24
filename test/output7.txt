@@ -1,0 +1,8 @@
+BBBBF
+ABAFF
+AAAGF
+AEAGF
+DEECC
+DDDDC
+Number of cases examined: 4965957 cases
+Execution time (ms): 136 ms

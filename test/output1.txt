@@ -1,0 +1,7 @@
+AGGGC
+AABCC
+EEBBF
+EEDFF
+EDDFF
+Number of cases examined: 1313207 cases
+Execution time (ms): 46 ms

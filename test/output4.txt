@@ -1,0 +1,13 @@
+AFFFF
+AAAHF
+BBHHH
+BBBIH
+CCIIG
+DCCGG
+DDLLG
+KDDLG
+KKLLJ
+KEEEJ
+EEJJJ
+Number of cases examined: 14030793474 cases
+Execution time (ms): 216111 ms

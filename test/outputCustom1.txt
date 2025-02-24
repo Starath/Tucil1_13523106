@@ -1,0 +1,7 @@
+   A   
+ BBAAA 
+BBBCCCC
+ EEECD 
+   E   
+Number of cases examined: 9285 cases
+Execution time (ms): 1 ms

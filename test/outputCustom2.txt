@@ -1,0 +1,4 @@
+B A
+ AA
+Number of cases examined: 15 cases
+Execution time (ms): 0 ms

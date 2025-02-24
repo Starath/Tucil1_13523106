@@ -4,12 +4,14 @@ public class Main {
         while (true) {
             Board board = IOPuzzlerFile.readInputFile();
             Solver solver = new Solver(board);
+
             long startTime = System.currentTimeMillis();
             if (solver.getBoard().getValidGrids() != PuzzlePiece.getCount()) {
                 System.out.println("No solution");
             }
             boolean result = solver.solvePuzzle(0);
             long endTime = System.currentTimeMillis() - startTime;
+
             if (result) {
                 solver.getBoard().printColored();
             } else {
