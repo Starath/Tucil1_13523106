@@ -64,7 +64,3 @@ B
 ...
 ```
 And so on
-
-## Author
-[Athian Nugraha Muarajuang]
-[13523106]
