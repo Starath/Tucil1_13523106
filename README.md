@@ -14,6 +14,13 @@ The program uses a backtracking brute force approach to try all possible piece p
 - Java JDK 17 or higher
 - Terminal or Command Prompt
 
+## Clone Repo
+First, to clone this repository, do:
+```bash
+git clone https://github.com/Starath/Tucil1_13523106.git
+cd Tucil1_13523106
+```
+
 ## Compilation Instructions
 To compile the program, do:
 ```bash
