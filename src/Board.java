@@ -11,22 +11,22 @@ public class Board {
     private int validGrids;
 
     public static final String[] ANSI_COLORS = {
-        "\u001B[30m", // Hitam
+        "\u001B[37m", // Putih
         "\u001B[31m", // Merah
         "\u001B[32m", // Hijau
         "\u001B[33m", // Kuning
         "\u001B[34m", // Biru
         "\u001B[35m", // Ungu
         "\u001B[36m", // Cyan
-        "\u001B[37m", // Putih
-        "\u001B[90m", // Hitam terang
+        "\u001B[97m", // Putih terang
+        "\u001B[37;1m", // Abu-abu terang
         "\u001B[91m", // Merah terang
         "\u001B[92m", // Hijau terang
         "\u001B[93m", // Kuning terang
         "\u001B[94m", // Biru terang
         "\u001B[95m", // Ungu terang
         "\u001B[96m", // Cyan terang
-        "\u001B[97m", // Putih terang
+        "\u001B[97;1m", // Putih lebih terang
         "\u001B[40m", // Background Hitam
         "\u001B[41m", // Background Merah
         "\u001B[42m", // Background Hijau
@@ -38,6 +38,7 @@ public class Board {
         "\u001B[100m", // Background Hitam terang
         "\u001B[107m"  // Background Putih terang
     };
+    
     
     public static final String ANSI_RESET = "\u001B[0m";
     
